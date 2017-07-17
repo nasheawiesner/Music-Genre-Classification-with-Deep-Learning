@@ -1,6 +1,7 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tensorflow as tf
+import arff
 
 '''
 input > weight > hidden layer 1(activation function) > weights > hidden layer 2(activation function) > weights > output layer
@@ -13,7 +14,7 @@ backpropogation
 feed forward + backprop = epoch
 
 '''
-
+data = arff.load(open("CAL500.arff"))
 from tensorflow.examples.tutorials.mnist import input_data
 
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
@@ -80,7 +81,6 @@ def train_neural_network(x):
         correct = tf.equal(tf.argmax(prediction,1), tf.argmax(y,1))
         accuracy = tf.reduce_mean(tf.cast(correct,'float'))
         print('Accuracy:',accuracy.eval({x:mnist.test.images, y:mnist.test.labels}))
-
 
 train_neural_network(x)
 
